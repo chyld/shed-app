@@ -32,7 +32,7 @@ export default async function ShedList() {
       </div>
       
       <ul style={{ listStyle: 'none', padding: 0 }}>
-        {sheds.map(shed => (
+        {sheds.map((shed: { id: string; title: string; amount: number }) => (
           <li 
             key={shed.id} 
             style={{ 

@@ -29,7 +29,7 @@ export default async function ShedDetail({ params }: PageProps) {
     notFound()
   }
 
-  const photos: Photo[] = shed.photos.map(photo => ({
+  const photos: Photo[] = shed.photos.map((photo: { id: number; path: string }) => ({
     id: photo.id.toString(),
     path: photo.path
   }));
