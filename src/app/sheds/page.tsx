@@ -1,7 +1,5 @@
-import { PrismaClient } from '@prisma/client'
+import prisma from '@/lib/prisma'
 import Link from 'next/link'
-
-const prisma = new PrismaClient()
 
 export default async function ShedList() {
   const sheds = await prisma.shed.findMany({
@@ -11,13 +9,50 @@ export default async function ShedList() {
   })
 
   return (
-    <div>
-      <h1>Sheds</h1>
-      <ul>
+    <div style={{ maxWidth: '800px', margin: '0 auto', padding: '1rem' }}>
+      <div style={{ 
+        display: 'flex', 
+        justifyContent: 'space-between', 
+        alignItems: 'center',
+        marginBottom: '1.5rem' 
+      }}>
+        <h1 style={{ fontSize: '1.5rem', fontWeight: 'bold' }}>Sheds</h1>
+        <Link
+          href="/sheds/new"
+          style={{
+            padding: '0.5rem 1rem',
+            backgroundColor: '#0066cc',
+            color: 'white',
+            textDecoration: 'none',
+            borderRadius: '4px'
+          }}
+        >
+          New Shed
+        </Link>
+      </div>
+      
+      <ul style={{ listStyle: 'none', padding: 0 }}>
         {sheds.map(shed => (
-          <li key={shed.id}>
-            <Link href={`/sheds/${shed.id}`}>
-              {shed.title} - ${shed.price}
+          <li 
+            key={shed.id} 
+            style={{ 
+              border: '1px solid #ccc',
+              padding: '1rem',
+              marginBottom: '0.5rem'
+            }}
+          >
+            <Link 
+              href={`/sheds/${shed.id}`}
+              style={{ 
+                textDecoration: 'none', 
+                color: 'inherit',
+                display: 'block'
+              }}
+            >
+              <span style={{ fontWeight: 'bold' }}>{shed.title}</span>
+              <span style={{ marginLeft: '0.5rem', color: '#666' }}>
+                ${shed.amount}
+              </span>
             </Link>
           </li>
         ))}
