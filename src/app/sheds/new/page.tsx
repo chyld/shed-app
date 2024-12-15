@@ -78,7 +78,7 @@ export default function NewShed() {
         
         <div>
           <label htmlFor="amount" style={{ display: 'block', marginBottom: '0.5rem' }}>
-            Price ($)
+            Amount ($)
           </label>
           <input
             type="number"

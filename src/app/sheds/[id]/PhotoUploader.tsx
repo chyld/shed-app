@@ -18,13 +18,14 @@ export default function PhotoUploader({ shedId, initialPhotos }: PhotoUploaderPr
     setUploading(true);
     const formData = new FormData();
     
+    formData.append('shedId', shedId);
     for (const file of e.target.files) {
       formData.append('photos', file);
     }
 
     try {
-      const response = await fetch(`/api/sheds/${shedId}/photos`, {
-        method: 'POST',
+      const response = await fetch('/api/sheds', {
+        method: 'PUT',
         body: formData,
       });
       
