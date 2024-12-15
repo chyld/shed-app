@@ -8,10 +8,22 @@ datasource db {
 }
 
 model Shed {
-  id          Int      @id @default(autoincrement())
+  id          String    @id @default(cuid())
   title       String
   description String
-  price       Float
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  amount      Int
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  photos      Photo[]
+}
+
+model Photo {
+  id        String   @id @default(cuid())
+  url       String
+  shed      Shed     @relation(fields: [shedId], references: [id], onDelete: Cascade)
+  shedId    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([shedId])
 }
