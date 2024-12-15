@@ -1,5 +1,7 @@
 #!/bin/bash
 
+rm -rf public/uploads
+
 rm -rf node_modules
 rm -rf prisma/dev.db
 rm -rf prisma/migrations
