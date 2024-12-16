@@ -9,50 +9,21 @@ export default async function ShedList() {
   })
 
   return (
-    <div style={{ maxWidth: '800px', margin: '0 auto', padding: '1rem' }}>
-      <div style={{ 
-        display: 'flex', 
-        justifyContent: 'space-between', 
-        alignItems: 'center',
-        marginBottom: '1.5rem' 
-      }}>
-        <h1 style={{ fontSize: '1.5rem', fontWeight: 'bold' }}>Sheds</h1>
-        <Link
-          href="/sheds/new"
-          style={{
-            padding: '0.5rem 1rem',
-            backgroundColor: '#0066cc',
-            color: 'white',
-            textDecoration: 'none',
-            borderRadius: '4px'
-          }}
-        >
-          New Shed
-        </Link>
+    <div>
+      <div>
+        <ul>
+          <li><Link href="/">Home</Link></li>
+          <li><Link href="/sheds">Sheds</Link></li>
+          <li><Link href="/sheds/new">New Shed</Link></li>
+        </ul>
       </div>
       
-      <ul style={{ listStyle: 'none', padding: 0 }}>
+      <ul>
         {sheds.map((shed: { id: string; title: string; amount: number }) => (
-          <li 
-            key={shed.id} 
-            style={{ 
-              border: '1px solid #ccc',
-              padding: '1rem',
-              marginBottom: '0.5rem'
-            }}
-          >
-            <Link 
-              href={`/sheds/${shed.id}`}
-              style={{ 
-                textDecoration: 'none', 
-                color: 'inherit',
-                display: 'block'
-              }}
-            >
-              <span style={{ fontWeight: 'bold' }}>{shed.title}</span>
-              <span style={{ marginLeft: '0.5rem', color: '#666' }}>
-                ${shed.amount}
-              </span>
+          <li key={shed.id}>
+            <Link href={`/sheds/${shed.id}`}>
+              <span>{shed.title}</span>
+              <span>${shed.amount}</span>
             </Link>
           </li>
         ))}
