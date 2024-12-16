@@ -3,6 +3,8 @@ import prisma from '@/lib/prisma'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import PhotoUploader from './PhotoUploader'
+import { getServerSession } from "next-auth";
+import { authOptions } from "../../api/auth/[...nextauth]/route";
 
 type Photo = {
   id: string;
@@ -17,6 +19,7 @@ interface PageProps {
 
 export default async function ShedDetail({ params }: PageProps) {
   const { id } = await params;
+  const session = await getServerSession(authOptions);
   
   const shed = await prisma.shed.findUnique({
     where: { id },
@@ -29,7 +32,7 @@ export default async function ShedDetail({ params }: PageProps) {
     notFound()
   }
 
-  const photos: Photo[] = shed.photos.map((photo) => ({
+  const photos = shed.photos.map((photo: Photo) => ({
     id: photo.id,
     path: photo.path
   }));
@@ -51,7 +54,23 @@ export default async function ShedDetail({ params }: PageProps) {
         <h2 style={{ fontSize: '1.5rem', fontWeight: 'bold', marginBottom: '1rem' }}>
           Photos
         </h2>
-        <PhotoUploader shedId={id} initialPhotos={photos} />
+        {session ? (
+          <PhotoUploader shedId={id} initialPhotos={photos} />
+        ) : (
+          <div>
+            {photos.map((photo: Photo, index: number) => (
+              <div key={photo.id} style={{ width: 200, height: 200, position: 'relative' }}>
+                <Image
+                  src={`/${photo.path}`}
+                  alt={`Shed photo ${index + 1}`}
+                  width={200}
+                  height={200}
+                  style={{ objectFit: 'cover' }}
+                />
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );
