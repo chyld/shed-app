@@ -14,6 +14,7 @@ export async function POST(request: NextRequest) {
         title: body.title,
         description: body.description,
         amount: body.amount,
+        salePercent: body.salePercent || 0,
       },
     });
     

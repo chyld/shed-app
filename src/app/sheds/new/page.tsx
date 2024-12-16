@@ -16,7 +16,8 @@ export default function NewShed() {
     const shedData = {
       title: formData.get('title'),
       description: formData.get('description'),
-      amount: parseFloat(formData.get('amount') as string),
+      amount: Math.round(parseFloat(formData.get('amount') as string) * 100),
+      salePercent: parseInt(formData.get('salePercent') as string) || 0,
     };
     
     try {
@@ -83,6 +84,20 @@ export default function NewShed() {
             required
             min="0"
             step="0.01"
+          />
+        </div>
+        
+        <div>
+          <label htmlFor="salePercent">
+            Sale Percentage (%)
+          </label>
+          <input
+            type="number"
+            id="salePercent"
+            name="salePercent"
+            min="0"
+            max="100"
+            defaultValue="0"
           />
         </div>
         

@@ -43,7 +43,21 @@ export default async function ShedDetail({ params }: PageProps) {
         <h1 style={{ fontSize: '2rem', fontWeight: 'bold', marginBottom: '1rem' }}>
           {shed.title}
         </h1>
-        <p>Price: ${shed.amount}</p>
+        <div className="mb-4">
+          {shed.salePercent > 0 ? (
+            <div>
+              <p className="line-through text-gray-500">
+                Original Price: ${(shed.amount / 100).toFixed(2)}
+              </p>
+              <p className="text-red-600 font-bold">
+                Sale Price: ${((shed.amount * (100 - shed.salePercent) / 100) / 100).toFixed(2)}
+                <span className="ml-2">({shed.salePercent}% off)</span>
+              </p>
+            </div>
+          ) : (
+            <p>Price: ${(shed.amount / 100).toFixed(2)}</p>
+          )}
+        </div>
         <p>{shed.description}</p>
         <p>Created: {shed.createdAt.toLocaleDateString()}</p>
         <p>Last Updated: {shed.updatedAt.toLocaleDateString()}</p>

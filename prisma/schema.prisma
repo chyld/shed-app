@@ -12,6 +12,7 @@ model Shed {
   title       String
   description String
   amount      Int
+  salePercent Int      @default(0)
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
   photos      Photo[]
