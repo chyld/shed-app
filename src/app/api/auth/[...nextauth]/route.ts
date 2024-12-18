@@ -7,9 +7,11 @@ export const authOptions = {
       name: "Credentials",
       credentials: {
         username: { label: "Username", type: "text" },
-        password: { label: "Password", type: "password" }
+        password: { label: "Password", type: "password" },
       },
-      async authorize(credentials: Record<"username" | "password", string> | undefined) {
+      async authorize(
+        credentials: Record<"username" | "password", string> | undefined
+      ) {
         if (!credentials?.username || !credentials?.password) {
           return null;
         }
@@ -24,14 +26,14 @@ export const authOptions = {
           };
         }
         return null;
-      }
-    })
+      },
+    }),
   ],
   pages: {
-    signIn: '/login',
+    signIn: "/login",
   },
 };
 
 const handler = NextAuth(authOptions);
 
-export { handler as GET, handler as POST }; 
+export { handler as GET, handler as POST };

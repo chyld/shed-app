@@ -7,9 +7,6 @@ export default withAuth({
 });
 
 export const config = {
-  // Only protect routes that involve creating or editing sheds
-  matcher: [
-    "/sheds/new",
-    "/api/sheds/((?!GET).*)",  // Protect all API routes except GET requests
-  ],
-}; 
+  // The following routes are protected
+  matcher: ["/sheds/new", "/api/sheds/(POST|PUT|DELETE)"],
+};
