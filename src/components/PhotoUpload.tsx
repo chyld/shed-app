@@ -4,10 +4,11 @@ import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 
 interface Props {
-  shedId: string;
+  assetType: "shed" | "trailer";
+  assetId: string;
 }
 
-export default function PhotoUploader({ shedId }: Props) {
+export default function PhotoUploader({ assetType, assetId }: Props) {
   const { data: session } = useSession();
 
   if (!session) {
@@ -20,14 +21,15 @@ export default function PhotoUploader({ shedId }: Props) {
     if (!event.target.files?.length) return;
 
     const formData = new FormData();
-    formData.append("shedId", shedId);
+    formData.append("assetType", assetType);
+    formData.append("assetId", assetId);
 
     for (const file of event.target.files) {
       formData.append("photos", file);
     }
 
-    const response = await fetch("/api/sheds", {
-      method: "PUT",
+    const response = await fetch("/api/photos", {
+      method: "POST",
       body: formData,
     });
 
@@ -39,7 +41,7 @@ export default function PhotoUploader({ shedId }: Props) {
 
   return (
     <div>
-      <h1>PhotoUploader</h1>
+      <h1>Photo Uploader</h1>
       <input type="file" multiple accept="image/*" onChange={handlePhotoUpload} />
     </div>
   );

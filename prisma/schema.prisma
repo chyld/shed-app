@@ -8,24 +8,38 @@ datasource db {
 }
 
 model Shed {
-  id          String    @id @default(cuid())
+  id          String   @id @default(cuid())
   title       String
   description String
   amount      Int
   salePercent Int      @default(0)
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  photos      Photo[]
+}
+
+model Trailer {
+  id          String   @id @default(cuid())
+  title       String
+  description String
+  amount      Int
+  salePercent Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
   photos      Photo[]
 }
 
 model Photo {
   id        String   @id @default(cuid())
-  path      String   // Will store the full path like 'uploads/1234567890-photo.jpg'
-  shed      Shed     @relation(fields: [shedId], references: [id], onDelete: Cascade)
-  shedId    String
+  path      String
   isPrimary Boolean  @default(false)
   createdAt DateTime @default(now())
 
+  shed      Shed?    @relation(fields: [shedId], references: [id], onDelete: Cascade)
+  shedId    String?
+  trailer   Trailer? @relation(fields: [trailerId], references: [id], onDelete: Cascade)
+  trailerId String?
+
   @@index([shedId])
-  @@unique([shedId, isPrimary], name: "uniquePrimaryPhoto")
+  @@index([trailerId])
 }

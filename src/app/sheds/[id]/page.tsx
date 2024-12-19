@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
-import PhotoUploader from "./PhotoUploader";
 import { getShed } from "@/lib/queries";
+import PhotoUpload from "@/components/PhotoUpload";
+import PhotoList from "@/components/PhotoList";
 
 type Props = {
   params: {
@@ -19,9 +20,8 @@ export default async function ShedDetail({ params }: Props) {
   return (
     <div>
       <h1>{shed.title}</h1>
-      <div>
-        <PhotoUploader shedId={id} />
-      </div>
+      <PhotoUpload assetType="shed" assetId={id} />
+      <PhotoList assetType="shed" assetId={id} photos={shed.photos} />
     </div>
   );
 }
