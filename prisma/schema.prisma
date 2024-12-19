@@ -23,7 +23,9 @@ model Photo {
   path      String   // Will store the full path like 'uploads/1234567890-photo.jpg'
   shed      Shed     @relation(fields: [shedId], references: [id], onDelete: Cascade)
   shedId    String
+  isPrimary Boolean  @default(false)
   createdAt DateTime @default(now())
 
   @@index([shedId])
+  @@unique([shedId, isPrimary], name: "uniquePrimaryPhoto")
 }

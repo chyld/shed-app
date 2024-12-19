@@ -2,6 +2,7 @@ import Link from "next/link";
 import { getServerSession } from "next-auth";
 import { getSheds } from "@/lib/queries";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import SecureLink from "@/components/SecureLink";
 
 export default async function ShedList() {
   const sheds = await getSheds();
@@ -10,12 +11,7 @@ export default async function ShedList() {
   return (
     <div>
       <h1>Available Sheds</h1>
-
-      {session && (
-        <div>
-          <Link href="/sheds/new">Create New Shed</Link>
-        </div>
-      )}
+      <SecureLink session={session} href="/sheds/new" text="Create New Shed" />
 
       <ul>
         {sheds.map((shed) => (
